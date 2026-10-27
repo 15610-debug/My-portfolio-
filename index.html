@@ -147,6 +147,20 @@ footer{max-width:1180px;margin:auto;padding:26px 28px 36px;border-top:1px solid 
 @media(max-width:480px){.grid{grid-template-columns:minmax(0,1fr);gap:12px}.card{display:grid;grid-template-columns:112px minmax(0,1fr);min-height:124px}.card img{height:100%;min-height:124px;aspect-ratio:auto;object-fit:cover}.card .b{padding:12px}.card h3{margin-top:7px}.grid.ls .card{display:flex}.grid.ls .card img{width:100px;min-height:108px}.tools{gap:6px}.tools .btn{min-height:38px}.brand{font-size:.96rem}.sec{font-size:1.25rem}.cropstage{height:36vh}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
+
+/* Consistent image sizing: prevent uploaded images from stretching layouts */
+.card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center}
+.ls .card img{width:168px;height:126px;min-height:0;aspect-ratio:4/3;object-fit:cover;flex:none}
+.av{width:104px;height:104px;aspect-ratio:1/1;object-fit:cover;object-position:center;overflow:hidden}
+.ban{background-size:cover;background-position:center;background-repeat:no-repeat}
+.th img{display:block;width:88px;height:88px;max-width:88px;aspect-ratio:1/1;object-fit:cover;object-position:center}
+dialog img{display:block;width:auto;max-width:100%;max-height:65vh;object-fit:contain;margin-inline:auto}
+#p-pv{width:96px;height:96px;max-width:96px;max-height:96px;aspect-ratio:1/1;object-fit:cover}
+.cropstage{height:min(48vh,360px);min-height:180px}
+.cropstage img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card .b{padding:12px}.ls .card img{width:112px;height:84px}.av{width:88px!important;height:88px!important}}
+@media(max-width:380px){.grid{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.btn,.chip,.card{transition:none!important}.btn:hover:not(:disabled),.card:hover{transform:none}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
