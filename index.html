@@ -161,7 +161,7 @@ async function cropImage(file){
   d.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',redraw));
   d.querySelector('#crot').onclick=()=>{angle=(angle+90)%360;redraw()};
   d.querySelector('#ccancel').onclick=()=>finish(null);
-  d.querySelector('#capply').onclick=()=>{try{const out=document.createElement('canvas');out.width=Math.max(1,Math.round(crop.w));out.height=Math.max(1,Math.round(crop.h));const ox=out.getContext('2d');ox.imageSmoothingEnabled=true;ox.imageSmoothingQuality='high';ox.drawImage(oriented,crop.x,crop.y,crop.w,crop.h,0,0,out.width,out.height);out.toBlob(b=>finish(b),'image/jpeg',.94)}catch(e){finish(null)}};
+  d.querySelector('#capply').onclick=()=>{try{const out=document.createElement('canvas'),scale=Math.min(1,4000/Math.max(crop.w,crop.h));out.width=Math.max(1,Math.round(crop.w*scale));out.height=Math.max(1,Math.round(crop.h*scale));const ox=out.getContext('2d');ox.imageSmoothingEnabled=true;ox.imageSmoothingQuality='high';ox.drawImage(oriented,crop.x,crop.y,crop.w,crop.h,0,0,out.width,out.height);out.toBlob(b=>finish(b),'image/jpeg',.94)}catch(e){finish(null)}};
   d.addEventListener('cancel',e=>{e.preventDefault();finish(null)});
  });
 }
