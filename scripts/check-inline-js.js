@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const { spawnSync } = require('node:child_process');
 
 const html = fs.readFileSync('index.html', 'utf8');
-const scripts = [...html.matchAll(/<script(?![^>]*\\bsrc=)[^>]*>([\\s\\S]*?)<\\/script>/gi)];
+const scripts = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)];
 if (!scripts.length) throw new Error('No inline JavaScript found');
 for (let i = 0; i < scripts.length; i++) {
   const result = spawnSync(process.execPath, ['--check', '-'], {
@@ -10,7 +10,7 @@ for (let i = 0; i < scripts.length; i++) {
     encoding: 'utf8'
   });
   if (result.status !== 0) {
-    process.stderr.write('Inline script ' + (i + 1) + ' has a syntax error:\\n');
+    process.stderr.write('Inline script ' + (i + 1) + ' has a syntax error:\n');
     process.stderr.write(result.stderr || result.stdout || 'Unknown syntax error');
     process.exit(result.status || 1);
   }
