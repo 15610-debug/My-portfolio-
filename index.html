@@ -223,6 +223,12 @@ dialog *{min-width:0}
 @media(prefers-reduced-motion:reduce){.card,.btn{transition:none!important}}
 
 
+/* Keep interactive popovers above page content on desktop and mobile */
+header{position:relative;z-index:1000}
+.tools{z-index:1001}
+#sw{z-index:1002;max-width:calc(100vw - 24px);max-height:min(70vh,420px);overflow-y:auto}
+.mn{z-index:1001}
+.mp{z-index:1002;max-height:min(70vh,420px);overflow-y:auto}
 /* Portfolio usability fixes: horizontal text-only list and unclipped management menu */
 .pc{overflow:visible!important}
 .pc .ban{overflow:hidden;border-radius:0!important}
@@ -274,14 +280,16 @@ const ls=(k,v)=>{try{return v===undefined?localStorage.getItem(k):localStorage.s
 function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',3500)}
 
 /* theme */
-function applyTheme(i){const n=Number(i),idx=Number.isInteger(n)&&THEMES[n]?n:0,t=THEMES[idx];R.style.setProperty('--h',String(t[1]));R.style.setProperty('--L',t[2]);R.dataset.theme=String(idx);ls('pn-theme',String(idx));$('#sw')?.querySelectorAll('.dot').forEach((b,j)=>{b.setAttribute('aria-pressed',String(j===idx));b.style.outline=j===idx?'2px solid var(--acc)':'none';b.style.outlineOffset='2px'})}
+function markTheme(idx){$('#sw')?.querySelectorAll('.dot').forEach((b,j)=>{b.setAttribute('aria-pressed',String(String(j)===String(idx)));b.style.outline=String(j)===String(idx)?'2px solid var(--acc)':'none';b.style.outlineOffset='2px'})}
+function applyTheme(i){const n=Number(i),idx=Number.isInteger(n)&&THEMES[n]?n:0,t=THEMES[idx];R.style.setProperty('--h',String(t[1]));R.style.setProperty('--L',t[2]);R.style.removeProperty('--acc');R.dataset.theme=String(idx);ls('pn-theme',String(idx));markTheme(idx);const cc=$('#cc');if(cc)cc.value='#'+hslHex(t[1],60,75)}
+function hslHex(h,s,l){s/=100;l/=100;const k=n=>(n+h/30)%12,a=s*Math.min(l,1-l),f=n=>Math.round(255*(l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1))))).toString(16).padStart(2,'0');return '#'+f(0)+f(8)+f(4)}
 $('#sw').innerHTML=THEMES.map((t,i)=>`<button type="button" class="dot" data-i="${i}" title="${t[0]}" aria-label="${t[0]}" aria-pressed="false" style="background:hsl(${t[1]} 60% 75%)"></button>`).join('')+'<label style="width:100%;margin:0">สีของคุณเอง <input type="color" id="cc" aria-label="เลือกสีเอง" style="padding:0;height:34px"></label>';
 $('#sw').addEventListener('click',e=>{const b=e.target.closest('.dot');if(b)applyTheme(b.dataset.i)});
 $('#bt').onclick=()=>{const on=$('#sw').classList.toggle('on');$('#bt').setAttribute('aria-expanded',String(on))};
 $('#bm').onclick=()=>{const d=R.dataset.mode?R.dataset.mode==='dark':matchMedia('(prefers-color-scheme:dark)').matches;R.dataset.mode=d?'light':'dark';ls('pn-mode',R.dataset.mode)};
-function setHue(h){const hue=Math.max(0,Math.min(359,Number(h)||0));R.style.setProperty('--h',String(hue));R.style.setProperty('--L','42%');R.dataset.theme='custom';ls('pn-theme','h'+hue);$('#sw')?.querySelectorAll('.dot').forEach(b=>{b.setAttribute('aria-pressed','false');b.style.outline='none'})}
-$('#sw').addEventListener('input',e=>{if(e.target.id!=='cc')return;const[r,g,b]=[1,3,5].map(i=>parseInt(e.target.value.slice(i,i+2),16)/255),m=Math.max(r,g,b),d=m-Math.min(r,g,b);let h=d?m===r?((g-b)/d)%6:m===g?(b-r)/d+2:(r-g)/d+4:0;setHue(Math.round((h*60+360)%360))});
-const th0=ls('pn-theme');if(th0&&th0[0]==='h')setHue(+th0.slice(1));else applyTheme(th0==null?1:Number(th0));if(ls('pn-mode'))R.dataset.mode=ls('pn-mode');
+function setCustomColor(hex,save=true){const value=/^#[0-9a-f]{6}$/i.test(hex)?hex:'#cc88dd';const[r,g,b]=[1,3,5].map(i=>parseInt(value.slice(i,i+2),16)/255),m=Math.max(r,g,b),mn=Math.min(r,g,b),d=m-mn;let h=d?m===r?((g-b)/d)%6:m===g?(b-r)/d+2:(r-g)/d+4:0;h=Math.round((h*60+360)%360);R.style.setProperty('--h',String(h));R.style.setProperty('--L','42%');R.style.setProperty('--acc',value);R.dataset.theme='custom';if(save)ls('pn-theme','c'+value.slice(1));markTheme('custom')}
+$('#sw').addEventListener('input',e=>{if(e.target.id==='cc')setCustomColor(e.target.value)});
+const th0=ls('pn-theme');if(th0&&th0[0]==='c')setCustomColor('#'+th0.slice(1),false);else if(th0&&th0[0]==='h'){const hue=Math.max(0,Math.min(359,Number(th0.slice(1))||0));R.style.setProperty('--h',String(hue));R.style.setProperty('--L','42%');R.dataset.theme='custom';R.style.removeProperty('--acc')}else applyTheme(th0==null?1:Number(th0));if(ls('pn-mode'))R.dataset.mode=ls('pn-mode');
 
 /* storage: IndexedDB, one record per device */
 const idbOpen=()=>new Promise((ok,no)=>{const r=indexedDB.open('pn-portfolio',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)});
