@@ -222,6 +222,28 @@ dialog *{min-width:0}
 }
 @media(prefers-reduced-motion:reduce){.card,.btn{transition:none!important}}
 
+
+/* Portfolio usability fixes: horizontal text-only list and unclipped management menu */
+.pc{overflow:visible!important}
+.pc .ban{overflow:hidden;border-radius:0!important}
+.mp{left:0;right:auto;top:calc(100% + 8px);z-index:100;width:max-content;min-width:220px;max-width:min(320px,calc(100vw - 32px));box-shadow:0 16px 40px rgba(12,15,35,.18);max-height:min(70vh,420px);overflow-y:auto}
+.mn{position:relative;z-index:101}
+.grid.ls{display:flex;flex-direction:column;gap:10px}
+.grid.ls .card{display:flex!important;flex-direction:row;align-items:center;min-height:0;width:100%;overflow:hidden;break-inside:auto;margin:0}
+.grid.ls .card img{display:none!important}
+.grid.ls .card .b{flex:1;min-width:0;padding:14px 18px}
+.grid.ls .card h3{margin:4px 0;font-size:1rem}
+.grid.ls .card p{display:block;overflow-wrap:anywhere}.grid.ls .card:focus-visible{outline-offset:3px}
+@media(max-width:759px){
+ .grid.ls{display:flex;grid-template-columns:minmax(0,1fr);gap:8px}
+ .grid.ls .card{display:flex!important;flex-direction:row;min-height:0}
+ .grid.ls .card .b{padding:12px 14px}
+ .grid.ls .card img{display:none!important}
+ .mp{max-width:calc(100vw - 32px);left:auto;right:0}
+ .own{position:relative}
+ .mn{position:static}
+ .mn .mp{right:0;left:auto}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
@@ -400,23 +422,3 @@ ready=true;render();if(bad)toast('โหลดข้อมูลจากเค�
 </script>
 </body>
 </html>
-
-
-/* Fix list view: text-first horizontal rows, no thumbnails; keep management menu visible */
-.pc{overflow:visible!important}
-.pc .ban{overflow:hidden;border-radius:0!important}
-.mp{left:0;right:auto;top:calc(100% + 8px);z-index:30;width:max-content;min-width:220px;max-width:calc(100vw - 32px);box-shadow:0 16px 40px rgba(12,15,35,.18)}
-.mn{z-index:20}
-.grid.ls{display:flex;flex-direction:column;gap:10px}
-.grid.ls .card{display:flex!important;flex-direction:row;align-items:center;min-height:0;width:100%;overflow:visible}
-.grid.ls .card img{display:none!important}
-.grid.ls .card .b{flex:1;min-width:0;padding:14px 18px}
-.grid.ls .card h3{margin:4px 0;font-size:1rem}
-.grid.ls .card p{display:block}
-@media(max-width:759px){
- .grid.ls{display:flex;grid-template-columns:minmax(0,1fr);gap:8px}
- .grid.ls .card{display:flex!important;flex-direction:row;min-height:0}
- .grid.ls .card .b{padding:12px 14px}
- .grid.ls .card img{display:none!important}
- .mp{max-width:calc(100vw - 32px)}
-}
