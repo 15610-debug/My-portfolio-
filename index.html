@@ -149,7 +149,7 @@ footer{max-width:1180px;margin:auto;padding:26px 28px 36px;border-top:1px solid 
 
 
 /* Consistent image sizing: prevent uploaded images from stretching layouts */
-.card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center}
+.card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;object-position:center;background:var(--soft)}
 .ls .card img{width:168px;height:126px;min-height:0;aspect-ratio:4/3;object-fit:cover;flex:none}
 .av{width:104px;height:104px;aspect-ratio:1/1;object-fit:cover;object-position:center;overflow:hidden}
 .ban{background-size:cover;background-position:center;background-repeat:no-repeat}
@@ -161,6 +161,11 @@ dialog img{display:block;width:auto;max-width:100%;max-height:65vh;object-fit:co
 @media(max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card .b{padding:12px}.ls .card img{width:112px;height:84px}.av{width:88px!important;height:88px!important}}
 @media(max-width:380px){.grid{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.btn,.chip,.card{transition:none!important}.btn:hover:not(:disabled),.card:hover{transform:none}}
+/* Keep certificates and document scans fully visible inside consistent image frames */
+.card img{object-fit:contain!important;background:var(--soft)}
+.gal img{width:auto;max-width:100%;max-height:65vh;object-fit:contain;margin-inline:auto}
+#p-pv{object-fit:cover}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
@@ -212,7 +217,7 @@ async function cropImage(file){
  return new Promise((resolve)=>{
   const d=document.createElement('dialog');d.style.cssText='max-width:680px;width:calc(100% - 24px);border:0;border-radius:18px;padding:18px;background:var(--card);color:var(--ink);max-height:92dvh;overflow:auto';
   const u=URL.createObjectURL(file);const img=new Image();let angle=0,zoom=1,px=50,py=50,ratio='free',done=false;
-  d.innerHTML='<h2>จัดกรอบรูปภาพ</h2><p class="note">ปรับสัดส่วน ซูม เลื่อน หรือหมุน แล้วตรวจดูภาพก่อนยืนยัน</p><div class="cropbox"><div class="cropstage"><canvas id="cropcanvas" style="max-width:100%;max-height:100%;width:auto;height:auto"></canvas></div><div class="cropcontrols"><label>สัดส่วน<select id="cratio"><option value="free">อิสระตามภาพ</option><option value="1">จัตุรัส 1:1</option><option value="4:3">แนวนอน 4:3</option><option value="16:9">แนวนอน 16:9</option><option value="3:4">แนวตั้ง 3:4</option><option value="9:16">แนวตั้ง 9:16</option></select></label><label>ซูม <input id="czoom" type="range" min="1" max="3" step=".05" value="1"></label><label>เลื่อนซ้าย–ขวา <input id="cpx" type="range" min="0" max="100" value="50"></label><label>เลื่อนขึ้น–ลง <input id="cpy" type="range" min="0" max="100" value="50"></label></div><div class="cropactions"><button class="btn" id="crot">หมุน 90°</button><button class="btn" id="ccancel">ยกเลิก</button><button class="btn pri" id="capply">ใช้รูปนี้</button></div></div>';
+  d.innerHTML='<h2>จัดกรอบรูปภาพ</h2><p class="note">ปรับสัดส่วน ซูม เลื่อน หรือหมุน แล้วตรวจดูภาพก่อนยืนยัน</p><div class="cropbox"><div class="cropstage"><canvas id="cropcanvas" style="max-width:100%;max-height:100%;width:auto;height:auto"></canvas></div><div class="cropcontrols"><label>สัดส่วน<select id="cratio"><option value="free">อิสระตามภาพ</option><option value="1:1">จัตุรัส 1:1</option><option value="4:3">แนวนอน 4:3</option><option value="16:9">แนวนอน 16:9</option><option value="3:4">แนวตั้ง 3:4</option><option value="9:16">แนวตั้ง 9:16</option></select></label><label>ซูม <input id="czoom" type="range" min="1" max="3" step=".05" value="1"></label><label>เลื่อนซ้าย–ขวา <input id="cpx" type="range" min="0" max="100" value="50"></label><label>เลื่อนขึ้น–ลง <input id="cpy" type="range" min="0" max="100" value="50"></label></div><div class="cropactions"><button class="btn" id="crot">หมุน 90°</button><button class="btn" id="ccancel">ยกเลิก</button><button class="btn pri" id="capply">ใช้รูปนี้</button></div></div>';
   document.body.append(d);d.showModal();const can=d.querySelector('#cropcanvas'),ctx=can.getContext('2d');
   let oriented=document.createElement('canvas'),octx=oriented.getContext('2d'),crop={x:0,y:0,w:1,h:1};
   function prepare(){
