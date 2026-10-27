@@ -400,3 +400,23 @@ ready=true;render();if(bad)toast('โหลดข้อมูลจากเค�
 </script>
 </body>
 </html>
+
+
+/* Fix list view: text-first horizontal rows, no thumbnails; keep management menu visible */
+.pc{overflow:visible!important}
+.pc .ban{overflow:hidden;border-radius:0!important}
+.mp{left:0;right:auto;top:calc(100% + 8px);z-index:30;width:max-content;min-width:220px;max-width:calc(100vw - 32px);box-shadow:0 16px 40px rgba(12,15,35,.18)}
+.mn{z-index:20}
+.grid.ls{display:flex;flex-direction:column;gap:10px}
+.grid.ls .card{display:flex!important;flex-direction:row;align-items:center;min-height:0;width:100%;overflow:visible}
+.grid.ls .card img{display:none!important}
+.grid.ls .card .b{flex:1;min-width:0;padding:14px 18px}
+.grid.ls .card h3{margin:4px 0;font-size:1rem}
+.grid.ls .card p{display:block}
+@media(max-width:759px){
+ .grid.ls{display:flex;grid-template-columns:minmax(0,1fr);gap:8px}
+ .grid.ls .card{display:flex!important;flex-direction:row;min-height:0}
+ .grid.ls .card .b{padding:12px 14px}
+ .grid.ls .card img{display:none!important}
+ .mp{max-width:calc(100vw - 32px)}
+}
