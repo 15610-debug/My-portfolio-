@@ -274,14 +274,14 @@ const ls=(k,v)=>{try{return v===undefined?localStorage.getItem(k):localStorage.s
 function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',3500)}
 
 /* theme */
-function applyTheme(i){const t=THEMES[i]||THEMES[0];R.style.setProperty('--h',t[1]);R.style.setProperty('--L',t[2]);ls('pn-theme',i)}
-$('#sw').innerHTML=THEMES.map((t,i)=>`<button class="dot" data-i="${i}" title="${t[0]}" aria-label="${t[0]}" style="background:hsl(${t[1]} 60% 75%)"></button>`).join('')+'<label style="width:100%;margin:0">สีของคุณเอง <input type="color" id="cc" aria-label="เลือกสีเอง" style="padding:0;height:34px"></label>';
-$('#sw').onclick=e=>{const b=e.target.closest('.dot');if(b)applyTheme(+b.dataset.i)};
-$('#bt').onclick=()=>{const on=$('#sw').classList.toggle('on');$('#bt').setAttribute('aria-expanded',on)};
+function applyTheme(i){const n=Number(i),idx=Number.isInteger(n)&&THEMES[n]?n:0,t=THEMES[idx];R.style.setProperty('--h',String(t[1]));R.style.setProperty('--L',t[2]);R.dataset.theme=String(idx);ls('pn-theme',String(idx));$('#sw')?.querySelectorAll('.dot').forEach((b,j)=>{b.setAttribute('aria-pressed',String(j===idx));b.style.outline=j===idx?'2px solid var(--acc)':'none';b.style.outlineOffset='2px'})}
+$('#sw').innerHTML=THEMES.map((t,i)=>`<button type="button" class="dot" data-i="${i}" title="${t[0]}" aria-label="${t[0]}" aria-pressed="false" style="background:hsl(${t[1]} 60% 75%)"></button>`).join('')+'<label style="width:100%;margin:0">สีของคุณเอง <input type="color" id="cc" aria-label="เลือกสีเอง" style="padding:0;height:34px"></label>';
+$('#sw').addEventListener('click',e=>{const b=e.target.closest('.dot');if(b)applyTheme(b.dataset.i)});
+$('#bt').onclick=()=>{const on=$('#sw').classList.toggle('on');$('#bt').setAttribute('aria-expanded',String(on))};
 $('#bm').onclick=()=>{const d=R.dataset.mode?R.dataset.mode==='dark':matchMedia('(prefers-color-scheme:dark)').matches;R.dataset.mode=d?'light':'dark';ls('pn-mode',R.dataset.mode)};
-function setHue(h){R.style.setProperty('--h',h);R.style.setProperty('--L','42%');ls('pn-theme','h'+h)}
-$('#sw').oninput=e=>{if(e.target.id!=='cc')return;const[r,g,b]=[1,3,5].map(i=>parseInt(e.target.value.substr(i,2),16)/255),m=Math.max(r,g,b),d=m-Math.min(r,g,b);let h=d?m===r?((g-b)/d)%6:m===g?(b-r)/d+2:(r-g)/d+4:0;setHue(Math.round((h*60+360)%360))};
-const th0=ls('pn-theme');th0&&th0[0]==='h'?setHue(+th0.slice(1)):applyTheme(th0==null?1:+th0);if(ls('pn-mode'))R.dataset.mode=ls('pn-mode');
+function setHue(h){const hue=Math.max(0,Math.min(359,Number(h)||0));R.style.setProperty('--h',String(hue));R.style.setProperty('--L','42%');R.dataset.theme='custom';ls('pn-theme','h'+hue);$('#sw')?.querySelectorAll('.dot').forEach(b=>{b.setAttribute('aria-pressed','false');b.style.outline='none'})}
+$('#sw').addEventListener('input',e=>{if(e.target.id!=='cc')return;const[r,g,b]=[1,3,5].map(i=>parseInt(e.target.value.slice(i,i+2),16)/255),m=Math.max(r,g,b),d=m-Math.min(r,g,b);let h=d?m===r?((g-b)/d)%6:m===g?(b-r)/d+2:(r-g)/d+4:0;setHue(Math.round((h*60+360)%360))});
+const th0=ls('pn-theme');if(th0&&th0[0]==='h')setHue(+th0.slice(1));else applyTheme(th0==null?1:Number(th0));if(ls('pn-mode'))R.dataset.mode=ls('pn-mode');
 
 /* storage: IndexedDB, one record per device */
 const idbOpen=()=>new Promise((ok,no)=>{const r=indexedDB.open('pn-portfolio',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)});
