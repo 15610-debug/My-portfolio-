@@ -169,6 +169,59 @@ dialog img{display:block;width:auto;max-width:100%;max-height:65vh;object-fit:co
 .gal img{width:auto;max-width:100%;max-height:65vh;object-fit:contain;margin-inline:auto}
 #p-pv{object-fit:cover}
 
+
+/* Final responsive layout: fit phones, tablets and desktops without horizontal page overflow */
+html,body{width:100%;max-width:100%;overflow-x:clip}
+body{min-width:0}
+header,main,footer{width:100%;min-width:0}
+header{gap:12px}
+.brand{min-width:0;overflow-wrap:anywhere}
+.tools{min-width:0;max-width:100%;flex-wrap:wrap;justify-content:flex-end}
+main{padding-left:clamp(12px,2.5vw,28px);padding-right:clamp(12px,2.5vw,28px)}
+.pc,.wel,.bar,.grid,.card,.card .b,.pt,.chs,.st,.own{min-width:0;max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;columns:unset}
+.grid .card{width:100%;min-width:0}
+.grid .card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover!important;object-position:center;background:var(--soft)}
+.grid .card:not(:has(img)){grid-template-columns:minmax(0,1fr)}
+.grid .card:not(:has(img)) .b{min-width:0}
+.card h3,.card p,.card .k{overflow-wrap:anywhere;word-break:normal}
+.bar input,.bar select,.bar button{min-width:0}
+.chips{max-width:100%;overscroll-behavior-x:contain}
+dialog{box-sizing:border-box;width:min(560px,calc(100vw - 24px));max-width:calc(100vw - 24px);min-width:0}
+dialog *{min-width:0}
+.row,.file-actions,.cropactions{flex-wrap:wrap}
+@media(min-width:1100px){.grid:not(.ls){grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:700px) and (max-width:1099px){.grid:not(.ls){grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:699px){
+ header{padding:12px 14px;align-items:flex-start}
+ main{padding:12px 12px 48px}
+ .grid:not(.ls){grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .grid:not(.ls) .card{display:block;min-width:0}
+ .grid:not(.ls) .card img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover!important}
+ .grid:not(.ls) .card .b{padding:10px}
+ .grid:not(.ls) .card h3{font-size:.92rem;line-height:1.45}
+ .grid:not(.ls) .card p{font-size:.82rem;line-height:1.5}
+ .grid:not(.ls) .card .k{font-size:.68rem;padding:2px 6px;margin:0 3px 3px 0}
+ .grid.ls .card{display:flex;min-width:0}
+ .grid.ls .card img{width:96px;height:72px;min-width:96px;min-height:0;object-fit:contain!important}
+ .grid.ls .card .b{flex:1;min-width:0;padding:10px}
+ .pb{padding-left:14px!important;padding-right:14px!important}
+ .st,.chs{padding-left:14px!important;padding-right:14px!important}
+ .own{padding-left:14px!important;padding-right:14px!important}
+ .pubnote{margin-left:14px;margin-right:14px}
+ .bar{display:flex;flex-wrap:wrap}
+ .bar input,.bar select{width:100%;flex:1 1 100%}
+ .sec{overflow-wrap:anywhere}
+}
+@media(max-width:340px){
+ header{flex-wrap:wrap}
+ .tools{width:100%;justify-content:flex-start}
+ .grid:not(.ls){gap:8px}
+ .grid:not(.ls) .card .b{padding:8px}
+ .grid:not(.ls) .card h3{font-size:.86rem}
+}
+@media(prefers-reduced-motion:reduce){.card,.btn{transition:none!important}}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
@@ -283,7 +336,7 @@ function render(){
   <p class="note">ข้อมูลที่บันทึกอยู่ในเบราว์เซอร์ของเครื่องนี้ยังไม่ซิงก์ข้ามเครื่อง หากเปลี่ยนเครื่องหรือล้างข้อมูลควรสำรองข้อมูลไว้เป็นระยะ · ตอนนี้เก็บภาพไว้ ${mb} MB</p>
   <h2 class="sec">ผลงานของฉัน <small>${list.length} รายการ</small></h2>
   <div class="bar"><input id="q" type="search" placeholder="ค้นหาชื่อ คำอธิบาย แท็ก" aria-label="ค้นหา" value="${esc(q)}"><details class="fl"${fo?' open':''}><summary class="btn">ตัวกรอง${[filter!=='ทั้งหมด',yr,aw,tg].filter(Boolean).length?` (${[filter!=='ทั้งหมด',yr,aw,tg].filter(Boolean).length})`:''}</summary><div class="fp"><select id="ct" aria-label="กรองตามหมวด">${['ทั้งหมด',...CATS,...(pub?[]:['ฉบับร่าง'])].map(c=>`<option${c===filter?' selected':''}>${c}</option>`).join('')}</select><select id="so" aria-label="เรียงลำดับ"><option value="new"${sort==='new'?' selected':''}>ใหม่ไปเก่า</option><option value="old"${sort==='old'?' selected':''}>เก่าไปใหม่</option></select>${ys.length?`<select id="yr" aria-label="กรองตามปี"><option value="">ทุกปี</option>${ys.map(y=>`<option${y===yr?' selected':''}>${y}</option>`).join('')}</select>`:''}${aws.length?`<select id="aw" aria-label="กรองตามรางวัล"><option value="">ทุกรางวัล</option>${aws.map(a=>`<option${a===aw?' selected':''}>${esc(a)}</option>`).join('')}</select>`:''}${ts.length?`<select id="tg" aria-label="กรองตามแท็ก"><option value="">ทุกแท็ก</option>${ts.map(t=>`<option${t===tg?' selected':''}>${esc(t)}</option>`).join('')}</select>`:''}</div></details><div class="seg" role="group" aria-label="มุมมอง"><button class="btn" aria-pressed="${vw==='card'}" data-v="card">การ์ด</button><button class="btn" aria-pressed="${vw==='list'}" data-v="list">รายการ</button></div>${q||yr||aw||tg||filter!=='ทั้งหมด'?'<button class="btn" data-a="clr">ล้างตัวกรอง</button>':''}</div><p class="note" role="status">${q||yr||aw||tg||filter!=='ทั้งหมด'?`พบ ${list.length} จาก ${vis} รายการ`:''}</p>
-  ${list.length?`<div class="grid${vw==='list'?' ls':''}">${list.map(x=>`<article class="card" tabindex="0" data-id="${esc(x.id)}">${x.imgs&&x.imgs[0]?`<img src="${url(x.imgs[0])}" alt="${esc(x.title)}" loading="lazy">`:''}<div class="b">${x.pin?'<span class="k pin">ปักหมุด</span>':''}${x.draft?'<span class="k">ฉบับร่าง</span>':''}<span class="k">${esc(x.cat)}</span><small>${yearOf(x)||esc(x.date)}</small><h3>${esc(x.title)}</h3>${x.award?`<p class="tg">${esc(x.award)}</p>`:''}</div></article>`).join('')}</div>`
+  ${list.length?`<div class="grid${vw==='list'?' ls':''}">${list.map(x=>`<article class="card" tabindex="0" data-id="${esc(x.id)}">${(x.originals||x.imgs)&&((x.originals||x.imgs)[0])?`<img src="${url((x.originals||x.imgs)[0])}" alt="${esc(x.title)}" loading="lazy">`:''}<div class="b">${x.pin?'<span class="k pin">ปักหมุด</span>':''}${x.draft?'<span class="k">ฉบับร่าง</span>':''}<span class="k">${esc(x.cat)}</span><small>${yearOf(x)||esc(x.date)}</small><h3>${esc(x.title)}</h3>${x.award?`<p class="tg">${esc(x.award)}</p>`:''}</div></article>`).join('')}</div>`
   :`<div class="empty">${vis?'ไม่พบผลงานที่ตรงกับการค้นหาหรือตัวกรอง':'ยังไม่มีผลงาน กด “＋ เพิ่มผลงาน” เพื่อเริ่มเก็บภาพและรายละเอียด'}</div>`}`}
 $('#app').onclick=e=>{if(menu&&!e.target.closest('.mn')){menu=false;render()}
   const vv=e.target.closest('[data-v]');if(vv){vw=vv.dataset.v;ls('pn-view',vw);return render()}
