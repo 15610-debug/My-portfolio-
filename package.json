@@ -2,6 +2,7 @@
   "name": "pn-portfolio-smoke-tests",
   "private": true,
   "scripts": {
+    "test:static": "node scripts/check-inline-js.js",
     "test:browser": "playwright test"
   },
   "devDependencies": {
