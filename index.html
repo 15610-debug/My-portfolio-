@@ -85,6 +85,143 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 img,canvas,video{max-width:100%}input,select,textarea,button{max-width:100%;}dialog{overflow:auto;-webkit-overflow-scrolling:touch}
 @media(max-width:360px){header{padding:12px;gap:8px}main{padding-left:12px;padding-right:12px}.tools{gap:4px}.btn{padding:7px 10px;font-size:.9rem}.wel{padding:20px 14px}.row>.btn{flex:1 1 auto}}
 @media(hover:none){.btn,.chip,button{touch-action:manipulation}}
+
+.cropbox{display:grid;gap:12px}.cropstage{height:min(48vh,360px);background:#18151d;border-radius:12px;display:grid;place-items:center;overflow:hidden}.cropstage img{max-width:100%;max-height:100%;object-fit:contain}.cropcontrols{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cropcontrols label{margin:0}.cropcontrols input,.cropcontrols select{width:100%}.cropactions{display:flex;gap:8px}.cropactions button{flex:1}@media(max-width:480px){.cropcontrols{grid-template-columns:1fr}}
+
+/* Portfolio polish: editorial layout, stronger hierarchy, and accessible motion */
+:root{--bg:#f6f7fb;--card:#fff;--ink:#182230;--mute:#647084;--acc:#5146a5;--soft:#eeecfb;--line:#e3e6ef;color-scheme:light}
+:root[data-mode="dark"]{--bg:#10131b;--card:#191e29;--ink:#eef1f8;--mute:#a7b0c2;--acc:#b9b0ff;--soft:#29253f;--line:#303849;color-scheme:dark}
+@media(prefers-color-scheme:dark){:root:not([data-mode="light"]){--bg:#10131b;--card:#191e29;--ink:#eef1f8;--mute:#a7b0c2;--acc:#b9b0ff;--soft:#29253f;--line:#303849;color-scheme:dark}}
+body{font-size:15px;line-height:1.75;letter-spacing:.005em}
+header{max-width:1180px;padding:16px 28px;position:sticky;top:0;z-index:8;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid color-mix(in srgb,var(--line) 65%,transparent)}
+.brand{font-size:1.04rem;letter-spacing:-.025em;color:var(--ink);display:flex;align-items:center;gap:10px}
+.brand:before{content:"";width:10px;height:10px;border-radius:3px;background:var(--acc);box-shadow:5px 5px 0 var(--soft)}
+main{max-width:1180px;padding:18px 28px 72px}
+.pc{border-color:var(--line);border-radius:24px;box-shadow:0 10px 34px rgba(28,31,56,.045);overflow:hidden!important;margin-top:4px}
+.ban{height:160px!important;border-radius:0!important;background-color:var(--soft);background-image:linear-gradient(110deg,color-mix(in srgb,var(--acc) 20%,var(--card)),var(--soft) 48%,color-mix(in srgb,var(--acc) 10%,var(--card)))}
+.pb{margin-top:-52px!important;padding:0 30px 20px!important;gap:18px 24px;align-items:flex-end}
+.av{width:104px!important;height:104px!important;border:5px solid var(--card);box-shadow:0 5px 18px rgba(20,20,45,.10);font-size:2.1rem!important}
+.pt{padding-top:58px!important}
+h1{font-size:clamp(1.8rem,4vw,2.65rem);letter-spacing:-.04em;line-height:1.2}
+.tag{font-size:1rem;line-height:1.65;margin-top:8px}
+.own{padding:0 30px 24px!important;align-items:center}
+.st,.chs{padding-left:30px!important;padding-right:30px!important}
+.st{gap:8px;padding-bottom:16px!important}
+.st span,.chs span,.chs a{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 13px}
+.chs{padding-bottom:16px!important}
+.pubnote{margin:0 30px 20px}
+.note{font-size:.82rem;line-height:1.65}
+.sec{font-size:1.45rem;letter-spacing:-.03em;margin:34px 0 12px;gap:10px}
+.sec small{font-size:.86rem;letter-spacing:0}
+.bar{align-items:center;gap:10px;margin:12px 0 6px}
+.bar input{min-width:170px;min-height:44px;background:var(--card)}
+.btn,.chip{transition:transform .16s ease,background .16s ease,border-color .16s ease,box-shadow .16s ease}
+.btn{min-height:40px;padding:7px 15px;border-radius:12px;font-size:.9rem;font-weight:500}
+.btn.pri{box-shadow:0 4px 12px color-mix(in srgb,var(--acc) 18%,transparent)}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 5px 16px rgba(30,35,70,.08)}
+.btn:active:not(:disabled){transform:translateY(0)}
+#bm{font-size:1.15rem;width:42px;padding:0}
+#sw{box-shadow:0 14px 36px rgba(20,20,45,.12)}
+.grid{columns:unset;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}
+.card{margin:0;break-inside:initial;border-radius:18px;border-color:var(--line);box-shadow:0 3px 12px rgba(25,30,55,.025);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(25,30,55,.09);border-color:color-mix(in srgb,var(--acc) 35%,var(--line))}
+.card img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--soft)}
+.card .b{padding:16px 17px 18px}
+.card h3{font-size:1.02rem;line-height:1.45;font-weight:600;letter-spacing:-.015em;margin:9px 0 4px}
+.card small{color:var(--mute);font-size:.8rem}
+.k{border-radius:7px;padding:2px 8px;font-size:.75rem;font-weight:500}
+.card .k.pin{background:#e7f7ee;color:#197448}
+.ls{display:flex;flex-direction:column;gap:12px}
+.ls .card{display:flex;align-items:stretch}
+.ls .card img{width:168px;height:100%;min-height:130px;aspect-ratio:auto;object-fit:cover}
+.empty{padding:52px 24px;background:var(--card);border-color:var(--line);line-height:1.8}
+dialog{box-shadow:0 24px 80px rgba(12,15,35,.22);border-radius:22px;padding:24px;max-height:90dvh}
+dialog h2{font-size:1.4rem;letter-spacing:-.025em;margin:0 0 14px}
+dialog label{font-weight:500;color:var(--ink);margin-top:14px}
+dialog input:not([type=checkbox]),dialog select,dialog textarea{margin-top:4px;background:var(--bg);min-height:42px}
+dialog textarea{resize:vertical}
+footer{max-width:1180px;margin:auto;padding:26px 28px 36px;border-top:1px solid var(--line)}
+@media(min-width:1100px){.grid:not(.ls){grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:760px) and (max-width:1099px){.grid:not(.ls){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:759px){header{padding:12px 16px}main{padding:12px 16px 52px}.ban{height:126px!important}.pb{padding:0 18px 16px!important;margin-top:-44px!important;gap:12px 16px}.av{width:88px!important;height:88px!important}.pt{padding-top:48px!important}.st,.chs{padding-left:18px!important;padding-right:18px!important}.own{padding:0 18px 18px!important}.pubnote{margin:0 18px 16px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card .b{padding:12px}.card h3{font-size:.96rem}.ls .card img{width:112px;min-height:112px}.bar{align-items:stretch}.bar input{flex:1 1 100%}.sec{margin-top:28px}}
+@media(max-width:480px){.grid{grid-template-columns:minmax(0,1fr);gap:12px}.card{display:grid;grid-template-columns:112px minmax(0,1fr);min-height:124px}.card img{height:100%;min-height:124px;aspect-ratio:auto;object-fit:cover}.card .b{padding:12px}.card h3{margin-top:7px}.grid.ls .card{display:flex}.grid.ls .card img{width:100px;min-height:108px}.tools{gap:6px}.tools .btn{min-height:38px}.brand{font-size:.96rem}.sec{font-size:1.25rem}.cropstage{height:36vh}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Consistent image sizing: prevent uploaded images from stretching layouts */
+.card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;object-position:center;background:var(--soft)}
+.ls .card img{width:168px;height:126px;min-height:0;aspect-ratio:4/3;object-fit:cover;flex:none}
+.av{width:104px;height:104px;aspect-ratio:1/1;object-fit:cover;object-position:center;overflow:hidden}
+.ban{background-size:cover;background-position:center;background-repeat:no-repeat}
+.th img{display:block;width:88px;height:88px;max-width:88px;aspect-ratio:1/1;object-fit:cover;object-position:center}
+dialog img{display:block;width:auto;max-width:100%;max-height:65vh;object-fit:contain;margin-inline:auto}
+#p-pv{width:96px;height:96px;max-width:96px;max-height:96px;aspect-ratio:1/1;object-fit:cover}
+.cropstage{height:min(48vh,360px);min-height:180px}
+.cropstage img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card .b{padding:12px}.ls .card img{width:112px;height:84px}.av{width:88px!important;height:88px!important}}
+@media(max-width:380px){.grid{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.btn,.chip,.card{transition:none!important}.btn:hover:not(:disabled),.card:hover{transform:none}}
+/* Keep certificates and document scans fully visible inside consistent image frames */
+.ls .card img{width:168px;height:126px;min-height:0;aspect-ratio:4/3;object-fit:contain!important;background:var(--soft)}
+@media(max-width:600px){.ls .card img{width:112px;height:84px}}
+
+.card img{object-fit:contain!important;background:var(--soft)}
+.gal img{width:auto;max-width:100%;max-height:65vh;object-fit:contain;margin-inline:auto}
+#p-pv{object-fit:cover}
+
+
+/* Final responsive layout: fit phones, tablets and desktops without horizontal page overflow */
+html,body{width:100%;max-width:100%;overflow-x:clip}
+body{min-width:0}
+header,main,footer{width:100%;min-width:0}
+header{gap:12px}
+.brand{min-width:0;overflow-wrap:anywhere}
+.tools{min-width:0;max-width:100%;flex-wrap:wrap;justify-content:flex-end}
+main{padding-left:clamp(12px,2.5vw,28px);padding-right:clamp(12px,2.5vw,28px)}
+.pc,.wel,.bar,.grid,.card,.card .b,.pt,.chs,.st,.own{min-width:0;max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;columns:unset}
+.grid .card{width:100%;min-width:0}
+.grid .card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover!important;object-position:center;background:var(--soft)}
+.grid .card:not(:has(img)){grid-template-columns:minmax(0,1fr)}
+.grid .card:not(:has(img)) .b{min-width:0}
+.card h3,.card p,.card .k{overflow-wrap:anywhere;word-break:normal}
+.bar input,.bar select,.bar button{min-width:0}
+.chips{max-width:100%;overscroll-behavior-x:contain}
+dialog{box-sizing:border-box;width:min(560px,calc(100vw - 24px));max-width:calc(100vw - 24px);min-width:0}
+dialog *{min-width:0}
+.row,.file-actions,.cropactions{flex-wrap:wrap}
+@media(min-width:1100px){.grid:not(.ls){grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:700px) and (max-width:1099px){.grid:not(.ls){grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:699px){
+ header{padding:12px 14px;align-items:flex-start}
+ main{padding:12px 12px 48px}
+ .grid:not(.ls){grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .grid:not(.ls) .card{display:block;min-width:0}
+ .grid:not(.ls) .card img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover!important}
+ .grid:not(.ls) .card .b{padding:10px}
+ .grid:not(.ls) .card h3{font-size:.92rem;line-height:1.45}
+ .grid:not(.ls) .card p{font-size:.82rem;line-height:1.5}
+ .grid:not(.ls) .card .k{font-size:.68rem;padding:2px 6px;margin:0 3px 3px 0}
+ .grid.ls .card{display:flex;min-width:0}
+ .grid.ls .card img{width:96px;height:72px;min-width:96px;min-height:0;object-fit:contain!important}
+ .grid.ls .card .b{flex:1;min-width:0;padding:10px}
+ .pb{padding-left:14px!important;padding-right:14px!important}
+ .st,.chs{padding-left:14px!important;padding-right:14px!important}
+ .own{padding-left:14px!important;padding-right:14px!important}
+ .pubnote{margin-left:14px;margin-right:14px}
+ .bar{display:flex;flex-wrap:wrap}
+ .bar input,.bar select{width:100%;flex:1 1 100%}
+ .sec{overflow-wrap:anywhere}
+}
+@media(max-width:340px){
+ header{flex-wrap:wrap}
+ .tools{width:100%;justify-content:flex-start}
+ .grid:not(.ls){gap:8px}
+ .grid:not(.ls) .card .b{padding:8px}
+ .grid:not(.ls) .card h3{font-size:.86rem}
+}
+@media(prefers-reduced-motion:reduce){.card,.btn{transition:none!important}}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
@@ -131,6 +268,38 @@ const idbPut=v=>new Promise((ok,no)=>{const t=idb.transaction('kv','readwrite');
 const idbPutK=(k,v)=>new Promise((ok,no)=>{const t=idb.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)});
 async function save(msg){render();if(!ready){toast('กำลังโหลดข้อมูล โปรดรอสักครู่');return false}if(!idb){toast('เบราว์เซอร์นี้ไม่อนุญาตให้บันทึกในเครื่อง ข้อมูลจะหายเมื่อปิดหน้า');return false}try{await idbPut(S);if(msg)toast(msg);const es=navigator.storage&&navigator.storage.estimate?await navigator.storage.estimate():null;if(es&&es.quota&&es.usage/es.quota>.8)toast('พื้นที่เก็บข้อมูลใกล้เต็ม โปรดสำรองข้อมูลและลบภาพที่ไม่ใช้');return true}catch(e){toast('บันทึกลงเครื่องไม่สำเร็จ ข้อมูลเดิมยังอยู่ในเครื่อง พื้นที่อาจเต็ม');return false}}
 
+/* image crop tool: preview crop, choose ratio, zoom and position before confirming */
+async function cropImage(file){
+ return new Promise((resolve)=>{
+  const d=document.createElement('dialog');d.style.cssText='max-width:680px;width:calc(100% - 24px);border:0;border-radius:18px;padding:18px;background:var(--card);color:var(--ink);max-height:92dvh;overflow:auto';
+  const u=URL.createObjectURL(file);const img=new Image();let angle=0,zoom=1,px=50,py=50,ratio='free',done=false;
+  d.innerHTML='<h2>จัดกรอบรูปภาพ</h2><p class="note">ปรับสัดส่วน ซูม เลื่อน หรือหมุน แล้วตรวจดูภาพก่อนยืนยัน</p><div class="cropbox"><div class="cropstage"><canvas id="cropcanvas" style="max-width:100%;max-height:100%;width:auto;height:auto"></canvas></div><div class="cropcontrols"><label>สัดส่วน<select id="cratio"><option value="free">อิสระตามภาพ</option><option value="1:1">จัตุรัส 1:1</option><option value="4:3">แนวนอน 4:3</option><option value="16:9">แนวนอน 16:9</option><option value="3:4">แนวตั้ง 3:4</option><option value="9:16">แนวตั้ง 9:16</option></select></label><label>ซูม <input id="czoom" type="range" min="1" max="3" step=".05" value="1"></label><label>เลื่อนซ้าย–ขวา <input id="cpx" type="range" min="0" max="100" value="50"></label><label>เลื่อนขึ้น–ลง <input id="cpy" type="range" min="0" max="100" value="50"></label></div><div class="cropactions"><button class="btn" id="crot">หมุน 90°</button><button class="btn" id="ccancel">ยกเลิก</button><button class="btn pri" id="capply">ใช้รูปนี้</button></div></div>';
+  document.body.append(d);d.showModal();const can=d.querySelector('#cropcanvas'),ctx=can.getContext('2d');
+  let oriented=document.createElement('canvas'),octx=oriented.getContext('2d'),crop={x:0,y:0,w:1,h:1};
+  function prepare(){
+   const swap=angle%180!==0;oriented.width=swap?img.naturalHeight:img.naturalWidth;oriented.height=swap?img.naturalWidth:img.naturalHeight;
+   octx.save();octx.translate(oriented.width/2,oriented.height/2);octx.rotate(angle*Math.PI/180);octx.drawImage(img,-img.naturalWidth/2,-img.naturalHeight/2);octx.restore();
+  }
+  function draw(){
+   if(!img.naturalWidth)return;
+   prepare();let ar=oriented.width/oriented.height;
+   if(ratio!=='free'){const p=ratio.split(':').map(Number);ar=p[0]/p[1]}
+   let w=oriented.width,h=w/ar;if(h>oriented.height){h=oriented.height;w=h*ar}
+   w=Math.max(1,w/zoom);h=Math.max(1,h/zoom);
+   const x=(oriented.width-w)*px/100,y=(oriented.height-h)*py/100;crop={x,y,w,h};
+   const k=Math.min(1,1000/Math.max(w,h));can.width=Math.max(1,Math.round(w*k));can.height=Math.max(1,Math.round(h*k));
+   ctx.clearRect(0,0,can.width,can.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(oriented,x,y,w,h,0,0,can.width,can.height);
+  }
+  function finish(v){if(done)return;done=true;URL.revokeObjectURL(u);d.close();d.remove();resolve(v)}
+  const redraw=()=>{ratio=d.querySelector('#cratio').value;zoom=+d.querySelector('#czoom').value;px=+d.querySelector('#cpx').value;py=+d.querySelector('#cpy').value;draw()};
+  img.onload=redraw;img.onerror=()=>finish(null);img.src=u;
+  d.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',redraw));
+  d.querySelector('#crot').onclick=()=>{angle=(angle+90)%360;redraw()};
+  d.querySelector('#ccancel').onclick=()=>finish(null);
+  d.querySelector('#capply').onclick=()=>{try{const out=document.createElement('canvas'),scale=Math.min(1,4000/Math.max(crop.w,crop.h));out.width=Math.max(1,Math.round(crop.w*scale));out.height=Math.max(1,Math.round(crop.h*scale));const ox=out.getContext('2d');ox.imageSmoothingEnabled=true;ox.imageSmoothingQuality='high';ox.drawImage(oriented,crop.x,crop.y,crop.w,crop.h,0,0,out.width,out.height);out.toBlob(b=>finish(b),'image/jpeg',.94)}catch(e){finish(null)}};
+  d.addEventListener('cancel',e=>{e.preventDefault();finish(null)});
+ });
+}
 /* images */
 async function shrink(f,max,sq){let src,w,h,closeSrc=()=>{};if(typeof createImageBitmap==='function'){try{src=await createImageBitmap(f);w=src.width;h=src.height;closeSrc=()=>src.close&&src.close()}catch(e){src=null}}if(!src){src=await new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{URL.revokeObjectURL(u);ok(im)};im.onerror=()=>{URL.revokeObjectURL(u);no(new Error('image'))};im.src=u});w=src.naturalWidth;h=src.naturalHeight}let sx=0,sy=0,sw=w,sh=h;if(sq){const m=Math.min(sw,sh);sx=(sw-m)/2;sy=(sh-m)/2;sw=sh=m}const k=Math.min(1,max/Math.max(sw,sh)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(sw*k));c.height=Math.max(1,Math.round(sh*k));const ctx=c.getContext('2d');if(!ctx){closeSrc();throw new Error('canvas')}ctx.drawImage(src,sx,sy,sw,sh,0,0,c.width,c.height);closeSrc();return new Promise((ok,no)=>{if(!c.toBlob)return no(new Error('blob'));c.toBlob(b=>b?ok(b):no(new Error('blob')),'image/jpeg',.82)})}
 const b2d=b=>b?new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(b)}):null;
@@ -167,7 +336,7 @@ function render(){
   <p class="note">ข้อมูลที่บันทึกอยู่ในเบราว์เซอร์ของเครื่องนี้ยังไม่ซิงก์ข้ามเครื่อง หากเปลี่ยนเครื่องหรือล้างข้อมูลควรสำรองข้อมูลไว้เป็นระยะ · ตอนนี้เก็บภาพไว้ ${mb} MB</p>
   <h2 class="sec">ผลงานของฉัน <small>${list.length} รายการ</small></h2>
   <div class="bar"><input id="q" type="search" placeholder="ค้นหาชื่อ คำอธิบาย แท็ก" aria-label="ค้นหา" value="${esc(q)}"><details class="fl"${fo?' open':''}><summary class="btn">ตัวกรอง${[filter!=='ทั้งหมด',yr,aw,tg].filter(Boolean).length?` (${[filter!=='ทั้งหมด',yr,aw,tg].filter(Boolean).length})`:''}</summary><div class="fp"><select id="ct" aria-label="กรองตามหมวด">${['ทั้งหมด',...CATS,...(pub?[]:['ฉบับร่าง'])].map(c=>`<option${c===filter?' selected':''}>${c}</option>`).join('')}</select><select id="so" aria-label="เรียงลำดับ"><option value="new"${sort==='new'?' selected':''}>ใหม่ไปเก่า</option><option value="old"${sort==='old'?' selected':''}>เก่าไปใหม่</option></select>${ys.length?`<select id="yr" aria-label="กรองตามปี"><option value="">ทุกปี</option>${ys.map(y=>`<option${y===yr?' selected':''}>${y}</option>`).join('')}</select>`:''}${aws.length?`<select id="aw" aria-label="กรองตามรางวัล"><option value="">ทุกรางวัล</option>${aws.map(a=>`<option${a===aw?' selected':''}>${esc(a)}</option>`).join('')}</select>`:''}${ts.length?`<select id="tg" aria-label="กรองตามแท็ก"><option value="">ทุกแท็ก</option>${ts.map(t=>`<option${t===tg?' selected':''}>${esc(t)}</option>`).join('')}</select>`:''}</div></details><div class="seg" role="group" aria-label="มุมมอง"><button class="btn" aria-pressed="${vw==='card'}" data-v="card">การ์ด</button><button class="btn" aria-pressed="${vw==='list'}" data-v="list">รายการ</button></div>${q||yr||aw||tg||filter!=='ทั้งหมด'?'<button class="btn" data-a="clr">ล้างตัวกรอง</button>':''}</div><p class="note" role="status">${q||yr||aw||tg||filter!=='ทั้งหมด'?`พบ ${list.length} จาก ${vis} รายการ`:''}</p>
-  ${list.length?`<div class="grid${vw==='list'?' ls':''}">${list.map(x=>`<article class="card" tabindex="0" data-id="${esc(x.id)}">${x.imgs&&x.imgs[0]?`<img src="${url(x.imgs[0])}" alt="${esc(x.title)}" loading="lazy">`:''}<div class="b">${x.pin?'<span class="k pin">ปักหมุด</span>':''}${x.draft?'<span class="k">ฉบับร่าง</span>':''}<span class="k">${esc(x.cat)}</span><small>${yearOf(x)||esc(x.date)}</small><h3>${esc(x.title)}</h3>${x.award?`<p class="tg">${esc(x.award)}</p>`:''}</div></article>`).join('')}</div>`
+  ${list.length?`<div class="grid${vw==='list'?' ls':''}">${list.map(x=>`<article class="card" tabindex="0" data-id="${esc(x.id)}">${(x.originals||x.imgs)&&((x.originals||x.imgs)[0])?`<img src="${url((x.originals||x.imgs)[0])}" alt="${esc(x.title)}" loading="lazy">`:''}<div class="b">${x.pin?'<span class="k pin">ปักหมุด</span>':''}${x.draft?'<span class="k">ฉบับร่าง</span>':''}<span class="k">${esc(x.cat)}</span><small>${yearOf(x)||esc(x.date)}</small><h3>${esc(x.title)}</h3>${x.award?`<p class="tg">${esc(x.award)}</p>`:''}</div></article>`).join('')}</div>`
   :`<div class="empty">${vis?'ไม่พบผลงานที่ตรงกับการค้นหาหรือตัวกรอง':'ยังไม่มีผลงาน กด “＋ เพิ่มผลงาน” เพื่อเริ่มเก็บภาพและรายละเอียด'}</div>`}`}
 $('#app').onclick=e=>{if(menu&&!e.target.closest('.mn')){menu=false;render()}
   const vv=e.target.closest('[data-v]');if(vv){vw=vv.dataset.v;ls('pn-view',vw);return render()}
@@ -191,7 +360,7 @@ function lb(x,i){const n=x.imgs.length;close();open(`<img src="${url(x.imgs[i])}
 const saveFile=async(n,b)=>{if(dl)return dl.save({filename:n,data:b});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)};
 const fname=(x,i)=>((x.title||'').replace(/[^\p{L}\p{N}]+/gu,'-').replace(/^-|-$/g,'')||'portfolio').slice(0,40)+(i<0?'.zip':'-'+(i+1)+'.jpg');
 async function dlAll(x){try{if(!window.JSZip)return toast('ต้องใช้อินเทอร์เน็ตเพื่อสร้างไฟล์ ZIP ตอนนี้ยังโหลดไม่ได้ ลองดาวน์โหลดทีละภาพ');const z=new JSZip();x.imgs.forEach((b,i)=>z.file(fname(x,i),b));await saveFile(fname(x,-1),await z.generateAsync({type:'blob'}))}catch(e){if(!e||e.code!=='declined')toast('ดาวน์โหลดไม่สำเร็จ')}}
-function form(x){const v=x||{cat:CATS[0],title:'',date:'',desc:'',tags:[],imgs:[]};let im=[...(v.imgs||[])];
+function form(x){const v=x||{cat:CATS[0],title:'',date:'',desc:'',tags:[],imgs:[]};let im=[...(v.imgs||[])], originals=[...(v.originals||v.imgs||[])];
   open(`<h2>${x?'แก้ไขผลงาน':'เพิ่มผลงาน'}</h2>
   <label for="f-t">ชื่อรายการ (จำเป็น)</label><input id="f-t" value="${esc(v.title)}">
   <label for="f-c">หมวด</label><select id="f-c">${CATS.map(c=>`<option${c===v.cat?' selected':''}>${c}</option>`).join('')}</select>
@@ -199,17 +368,17 @@ function form(x){const v=x||{cat:CATS[0],title:'',date:'',desc:'',tags:[],imgs:[
   <label for="f-x">รายละเอียดสั้น ๆ</label><textarea id="f-x" rows="3">${esc(v.desc)}</textarea>
   <p class="note"><b>ข้อมูลเพิ่มเติม (ไม่บังคับ)</b></p><label for="f-e">ประเภทการแข่งขันหรือกิจกรรม</label><input id="f-e" value="${esc(v.event)}"><label for="f-a">รางวัลหรือระดับรางวัล (เช่น ชนะเลิศ ระดับประเทศ)</label><input id="f-a" value="${esc(v.award)}"><label for="f-o">บทบาทของฉัน</label><input id="f-o" value="${esc(v.role)}"><label for="f-l">สิ่งที่ได้เรียนรู้</label><textarea id="f-l" rows="2">${esc(v.learned)}</textarea><label for="f-y">ผลลัพธ์</label><textarea id="f-y" rows="2">${esc(v.result)}</textarea><label for="f-k">ลิงก์ประกอบ (ถ้ามี)</label><input id="f-k" type="url" placeholder="https://" value="${esc(v.link)}"><label for="f-g">แท็ก (พิมพ์ได้เองหลายคำ คั่นด้วยจุลภาค)</label><input id="f-g" value="${esc((v.tags||[]).join(', '))}"><label><input id="f-p" type="checkbox" style="width:auto"${v.pin?' checked':''}> ปักหมุดเป็นผลงานเด่น</label><label><input id="f-r" type="checkbox" style="width:auto"${v.draft?' checked':''}> บันทึกเป็นฉบับร่าง</label><label for="f-i">ภาพ (เลือกได้หลายไฟล์ สูงสุด 12 ภาพ ภาพแรกเป็นภาพปก)</label><div class="th" id="th"></div><div class="file-actions"><button class="btn" type="button" id="f-pick">เลือกรูปจากเครื่อง</button></div><p class="file-help">ภาพจะถูกย่อและเก็บในเครื่องนี้ ถ้าเลือกรูปไม่ได้ ให้เปิดไฟล์ด้วย Chrome หรือ Safari โดยตรง</p><input id="f-i" class="hid" type="file" accept="image/*,.jpg,.jpeg,.png,.webp" multiple>
   <div class="row"><button class="btn" data-x>ยกเลิก</button><button class="btn pri" id="f-s">บันทึก</button></div>`);
-  const th=()=>{$('#th').innerHTML=im.map((b,i)=>`<div><img src="${url(b)}" alt="ภาพที่ ${i+1}"><small>${i?'':'ปก · '}${Math.round(b.size/1024)} KB</small><div class="mv"><button class="btn" type="button" data-m="${i},-1" aria-label="เลื่อนภาพที่ ${i+1} ไปก่อนหน้า"${i?'':' disabled'}>←</button><button class="btn" type="button" data-m="${i},1" aria-label="เลื่อนภาพที่ ${i+1} ไปถัดไป"${i<im.length-1?'':' disabled'}>→</button><button class="btn" type="button" data-r="${i}" aria-label="นำภาพที่ ${i+1} ออก">×</button></div></div>`).join('')};th();$('#f-pick').addEventListener('click',()=>pickImageInput($('#f-i')));$('#f-i').onchange=async e=>{const fs=[...e.target.files];e.target.value='';if(!fs.length)return;const sb=$('#f-s');sb.disabled=true;let bad=0,skip=0;for(const f of fs){if(im.length>=12){skip++;continue}if(!f.type.startsWith('image/')||f.size>31457280){bad++;continue}try{im.push(await shrink(f,1400))}catch(_){bad++}}sb.disabled=false;if($('#th'))th();if(skip)toast('เพิ่มได้สูงสุด 12 ภาพ ข้ามไป '+skip+' ภาพ');else if(bad)toast('ใช้ไม่ได้ '+bad+' ไฟล์ (ต้องเป็นรูป JPG PNG WebP ไม่เกิน 30 MB)')};$('#th').onclick=e=>{const m=e.target.closest('[data-m]');if(m){const[i,d]=m.dataset.m.split(',').map(Number),j=i+d;[im[i],im[j]]=[im[j],im[i]];return th()}const b=e.target.closest('[data-r]');if(b){im.splice(+b.dataset.r,1);th()}};
+  const th=()=>{$('#th').innerHTML=im.map((b,i)=>`<div><img src="${url(b)}" alt="ภาพที่ ${i+1}"><small>${i?'':'ปก · '}${Math.round(b.size/1024)} KB</small><div class="mv"><button class="btn" type="button" data-m="${i},-1" aria-label="เลื่อนภาพที่ ${i+1} ไปก่อนหน้า"${i?'':' disabled'}>←</button><button class="btn" type="button" data-m="${i},1" aria-label="เลื่อนภาพที่ ${i+1} ไปถัดไป"${i<im.length-1?'':' disabled'}>→</button><button class="btn" type="button" data-crop="${i}" aria-label="ครอปภาพที่ ${i+1} ใหม่">ครอป</button><button class="btn" type="button" data-r="${i}" aria-label="นำภาพที่ ${i+1} ออก">×</button></div></div>`).join('')};th();$('#f-pick').addEventListener('click',()=>pickImageInput($('#f-i')));$('#f-i').onchange=async e=>{const fs=[...e.target.files];e.target.value='';if(!fs.length)return;const sb=$('#f-s');sb.disabled=true;let bad=0,skip=0;for(const f of fs){if(im.length>=12){skip++;continue}if(!f.type.startsWith('image/')||f.size>31457280){bad++;continue}try{const cropped=await cropImage(f);if(!cropped)continue;im.push(await shrink(cropped,1400));originals.push(f)}catch(_){bad++}}sb.disabled=false;if($('#th'))th();if(skip)toast('เพิ่มได้สูงสุด 12 ภาพ ข้ามไป '+skip+' ภาพ');else if(bad)toast('ใช้ไม่ได้ '+bad+' ไฟล์ (ต้องเป็นรูป JPG PNG WebP ไม่เกิน 30 MB)')};$('#th').onclick=async e=>{const m=e.target.closest('[data-m]');if(m){const[i,d]=m.dataset.m.split(',').map(Number),j=i+d;[im[i],im[j]]=[im[j],im[i]];[originals[i],originals[j]]=[originals[j],originals[i]];return th()}const c=e.target.closest('[data-crop]');if(c){const i=+c.dataset.crop,source=originals[i]||im[i],cropped=await cropImage(source);if(cropped){im[i]=await shrink(cropped,1400);th()}return}const b=e.target.closest('[data-r]');if(b){im.splice(+b.dataset.r,1);originals.splice(+b.dataset.r,1);th()}};
   $('#f-s').onclick=async()=>{const sb=$('#f-s'),t=$('#f-t').value.trim(),lk=$('#f-k').value.trim();if(sb.disabled)return;if(!t)return toast('กรุณาใส่ชื่อรายการ');if(lk&&!/^https?:\/\//i.test(lk))return toast('ลิงก์ต้องขึ้นต้นด้วย http:// หรือ https://');sb.disabled=true;
-    const it={...(x||{id:'i'+Date.now().toString(36),at:Date.now()}),title:t,cat:$('#f-c').value,date:$('#f-d').value.trim(),desc:$('#f-x').value.trim(),tags:$('#f-g').value.split(/[,，]/).map(s=>s.trim()).filter(Boolean),pin:$('#f-p').checked,draft:$('#f-r').checked,event:$('#f-e').value.trim(),award:$('#f-a').value.trim(),role:$('#f-o').value.trim(),learned:$('#f-l').value.trim(),result:$('#f-y').value.trim(),link:lk,imgs:[...im]};delete it.img;
+    const it={...(x||{id:'i'+Date.now().toString(36),at:Date.now()}),title:t,cat:$('#f-c').value,date:$('#f-d').value.trim(),desc:$('#f-x').value.trim(),tags:$('#f-g').value.split(/[,，]/).map(s=>s.trim()).filter(Boolean),pin:$('#f-p').checked,draft:$('#f-r').checked,event:$('#f-e').value.trim(),award:$('#f-a').value.trim(),role:$('#f-o').value.trim(),learned:$('#f-l').value.trim(),result:$('#f-y').value.trim(),link:lk,imgs:[...im],originals:[...originals]};delete it.img;
     const prev=S.items,k=x?prev.indexOf(x):-1;S.items=k>=0?prev.map((o,i)=>i===k?it:o):[it,...prev];const ok=await save('บันทึกแล้ว');if(ok)close();else{S.items=prev;render();sb.disabled=false}}}
 function profile(){open(pform(false));bindP(close)}
 
 /* backup */
-async function backup(){try{const o={name:S.name,tagline:S.tagline,avatar:await b2d(S.avatar),cover:await b2d(S.cover),skills:S.skills,interests:S.interests,contacts:S.contacts,hide:S.hide,items:await Promise.all(S.items.map(async i=>({...i,img:undefined,imgs:await Promise.all((i.imgs||[]).map(b2d))})))};await saveFile('portfolio-backup-'+new Date().toISOString().slice(0,10)+'.json',new Blob([JSON.stringify(o)],{type:'application/json'}));toast('สำรองข้อมูลแล้ว '+S.items.length+' ผลงาน ไฟล์นี้มีรูปและข้อมูลส่วนตัว (รวมฉบับร่าง) เก็บไว้เป็นความลับ')}catch(e){toast('ยังไม่ได้บันทึกไฟล์สำรอง')}}
+async function backup(){try{const o={name:S.name,tagline:S.tagline,avatar:await b2d(S.avatar),cover:await b2d(S.cover),skills:S.skills,interests:S.interests,contacts:S.contacts,hide:S.hide,items:await Promise.all(S.items.map(async i=>({...i,img:undefined,imgs:await Promise.all((i.imgs||[]).map(b2d)),originals:await Promise.all((i.originals||i.imgs||[]).map(b2d))})))};await saveFile('portfolio-backup-'+new Date().toISOString().slice(0,10)+'.json',new Blob([JSON.stringify(o)],{type:'application/json'}));toast('สำรองข้อมูลแล้ว '+S.items.length+' ผลงาน ไฟล์นี้มีรูปและข้อมูลส่วนตัว (รวมฉบับร่าง) เก็บไว้เป็นความลับ')}catch(e){toast('ยังไม่ได้บันทึกไฟล์สำรอง')}}
 function restore(){const i=document.createElement('input');i.type='file';i.accept='.json,application/json';i.onchange=async()=>{let d;try{d=JSON.parse(await i.files[0].text());if(!d||!Array.isArray(d.items)||d.items.some(x=>!x||typeof x.title!=='string'))throw 0}catch(e){return toast('ไฟล์สำรองไม่ถูกต้อง ข้อมูลเดิมไม่ถูกแก้ไข')}
   open(`<h2>กู้คืนข้อมูล</h2><p>ไฟล์สำรองมี ${d.items.length} ผลงาน ข้อมูลในเครื่องตอนนี้มี ${S.items.length} ผลงาน</p><p class="note">ถ้าจะแทนที่ทั้งหมด ควรสำรองข้อมูลปัจจุบันก่อน</p><div class="row"><button class="btn" data-x>ยกเลิก</button><button class="btn" id="rg">รวมกับข้อมูลเดิม</button><button class="btn del" id="rp">แทนที่ทั้งหมด</button></div>`);
-  const conv=x=>migrate({...x,id:x.id||'i'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),tags:Array.isArray(x.tags)?x.tags:[],img:undefined,imgs:(x.imgs||[x.img]).filter(Boolean).map(d2b)});let cv;try{cv=d.items.map(conv)}catch(e){close();return toast('ไฟล์สำรองมีรูปภาพที่เสียหาย ข้อมูลเดิมไม่ถูกแก้ไข')}
+  const conv=x=>migrate({...x,id:x.id||'i'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),tags:Array.isArray(x.tags)?x.tags:[],img:undefined,imgs:(x.imgs||[x.img]).filter(Boolean).map(d2b),originals:(x.originals||x.imgs||[x.img]).filter(Boolean).map(d2b)});let cv;try{cv=d.items.map(conv)}catch(e){close();return toast('ไฟล์สำรองมีรูปภาพที่เสียหาย ข้อมูลเดิมไม่ถูกแก้ไข')}
   $('#rg').onclick=()=>{try{const prev=S.items,ids=new Set(prev.map(x=>x.id)),add=cv.filter(x=>!ids.has(x.id));S.items=[...prev,...add];close();save('รวมข้อมูลแล้ว เพิ่ม '+add.length+' ผลงาน').then(ok=>{if(!ok){S.items=prev;render()}})}catch(e){toast('นำเข้าไม่สำเร็จ ข้อมูลเดิมไม่ถูกแก้ไข')}};
   $('#rp').onclick=()=>{const b=$('#rp');if(!b.dataset.s){b.dataset.s=1;b.textContent='กดอีกครั้งเพื่อยืนยันการแทนที่';return}try{const n={name:d.name||S.name,tagline:d.tagline||'',avatar:d2b(d.avatar),cover:d2b(d.cover),skills:d.skills||[],interests:d.interests||[],contacts:d.contacts||{},hide:d.hide||{},items:cv};const ps=S;S=n;close();save('กู้คืนแล้ว '+n.items.length+' ผลงาน').then(ok=>{if(!ok){S=ps;render()}})}catch(e){toast('นำเข้าไม่สำเร็จ ข้อมูลเดิมไม่ถูกแก้ไข')}}};i.click()}
 
